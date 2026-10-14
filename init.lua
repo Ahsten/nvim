@@ -301,12 +301,6 @@ vim.keymap.set({'n', 't'}, '<C-g>', function()
   Snacks.terminal.toggle()
 end, {desc = 'Toggle terminal window'})
 
--- Close while preserving window layout
--- docs: https://github.com/folke/snacks.nvim/blob/main/docs/bufdelete.md
-vim.keymap.set('n', '<leader>bc', function()
-  Snacks.bufdelete()
-end, {desc = 'Close buffer'})
-
 -- Fuzzy finders
 -- docs: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 vim.keymap.set('n', '<leader><space>', function() Snacks.picker('buffers') end, {desc = 'Search open files'})
