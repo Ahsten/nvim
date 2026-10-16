@@ -44,8 +44,6 @@ vim.keymap.set('n', '<leader>bl', '<cmd>buffer #<cr>', {desc = 'Go to most recen
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
 
-vim.api.nvim_create_user_command('ReloadConfig', 'source $MYVIMRC', {})
-
 local group = vim.api.nvim_create_augroup('user_cmds', {clear = true})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -134,7 +132,6 @@ MiniDeps.setup({
 
 MiniDeps.add('folke/tokyonight.nvim')
 MiniDeps.add('folke/snacks.nvim')
-MiniDeps.add('akinsho/bufferline.nvim')
 MiniDeps.add('tpope/vim-repeat')
 MiniDeps.add('neovim/nvim-lspconfig')
 MiniDeps.add('mason-org/mason.nvim')
@@ -155,19 +152,11 @@ MiniDeps.add({
   checkout = 'v2.x',
 })
 
-
 -- ========================================================================== --
 -- ==                         PLUGIN CONFIGURATION                         == --
 -- ========================================================================== --
 
 -- See :help tokyonight.nvim-tokyo-night-configuration
-require('tokyonight').setup({
-  styles = {
-    comments = {italic = false},
-    keywords = {italic = false},
-  },
-})
-
 vim.o.termguicolors = true
 vim.cmd.colorscheme('tokyonight-night')
 
@@ -236,28 +225,6 @@ mini_clue.setup({
   }
 })
 
--- See :help bufferline-settings
-require('bufferline').setup({
-  options = {
-    mode = 'buffers',
-    offsets = {
-      {filetype = 'snacks_layout_box'}
-    },
-  },
-  -- :help bufferline-highlights
-  highlights = {
-    buffer_selected = {
-      italic = false
-    },
-    indicator_selected = {
-      fg = {attribute = 'fg', highlight = 'Function'},
-      italic = false
-    }
-  }
-})
-
-vim.keymap.set('n', 'gt', '<cmd>BufferLinePick<cr>', {desc = 'Pick a visible tab'})
-
 -- See :help ts-enable-config
 vim.g.ts_enable = {
   auto_init = true,
@@ -269,9 +236,9 @@ vim.g.ts_enable = {
 local Snacks = require('snacks')
 
 Snacks.setup({
-  indent = {
+	git = { enabled = true },
+  lazygit = {
     enabled = true,
-    char = '▏',
   },
   explorer = {
     enabled = true,
@@ -312,6 +279,8 @@ vim.keymap.set('n', '<leader>fs', function() Snacks.picker('lines') end, {desc =
 vim.keymap.set('n', '<leader>u', function() Snacks.picker('undo') end, {desc = 'Undo history'})
 vim.keymap.set('n', '<leader>/', function() Snacks.picker('pickers') end, {desc = 'Search picker'})
 vim.keymap.set('n', '<leader>?', function() Snacks.picker('keymaps') end, {desc = 'Search keymaps'})
+vim.keymap.set('n', '<leader>gb', function() Snacks.git.blame_line() end, {desc = 'Git blame'})
+vim.keymap.set('n', '<leader>glg', function() Snacks.lazygit() end, {desc = 'Open lazygit'})
 
 -- Autocompletion
 -- docs: https://cmp.saghen.dev/configuration/general.html
@@ -391,12 +360,10 @@ require('mason').setup({})
 -- :help mason-lspconfig-quickstart
 -- :help mason-lspconfig-default-settings
 require('mason-lspconfig').setup({
-  automatic_enable = false,
-  ensure_installed = {
-    'gopls',
-    'rust_analyzer',
-		'zls',
-  },
+	automatic_enable = false,
+	ensure_installed = {
+		'ts_ls'
+	},
 })
 
-vim.lsp.enable({'gopls', 'rust_analyzer', 'zls'})
+vim.lsp.enable({'gopls', 'rust_analyzer', 'zls', 'ts_ls'})
