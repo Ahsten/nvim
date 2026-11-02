@@ -93,63 +93,24 @@ local mini = {}
 mini.branch = 'main'
 mini.packpath = vim.fn.stdpath('data') .. '/site'
 
-function mini.require_deps()
-  local mini_path = mini.packpath .. '/pack/deps/start/mini.nvim'
-
-  if not vim.uv.fs_stat(mini_path) then
-    print('Installing mini.nvim....')
-    vim.fn.system({
-      'git',
-      'clone',
-      '--filter=blob:none',
-      'https://github.com/nvim-mini/mini.nvim',
-      string.format('--branch=%s', mini.branch),
-      mini_path
-    })
-
-    vim.cmd('packadd mini.nvim | helptags ALL')
-  end
-
-  local ok, deps = pcall(require, 'mini.deps')
-  if not ok then
-    return {}
-  end
-
-  return deps
-end
-
-local MiniDeps = mini.require_deps()
-if not MiniDeps.setup then
-  return
-end
-
--- See :help MiniDeps.config
-MiniDeps.setup({
-  path = {
-    package = mini.packpath,
+vim.pack.add({
+  'https://github.com/nvim-mini/mini.nvim',
+  'https://github.com/neovim/nvim-lspconfig',
+  'https://github.com/nvim-treesitter/nvim-treesitter',
+  'https://github.com/mason-org/mason.nvim',
+  'https://github.com/mason-org/mason-lspconfig.nvim',
+  'https://github.com/folke/tokyonight.nvim',
+  'https://github.com/folke/snacks.nvim',
+  'https://codeberg.org/ziglang/zig.vim',
+  'https://github.com/rafamadriz/friendly-snippets',
+  {
+	  src = 'https://github.com/saghen/blink.cmp',
+	  version = 'v1.9.1',
   },
-})
-
-MiniDeps.add('folke/tokyonight.nvim')
-MiniDeps.add('folke/snacks.nvim')
-MiniDeps.add('tpope/vim-repeat')
-MiniDeps.add('neovim/nvim-lspconfig')
-MiniDeps.add('mason-org/mason.nvim')
-MiniDeps.add('mason-org/mason-lspconfig.nvim')
-
--- See :help MiniDeps.add
-MiniDeps.add({
-  source = 'nvim-mini/mini.nvim',
-  checkout = mini.branch,
-})
-MiniDeps.add({
-  source = 'saghen/blink.cmp',
-  depends = {'rafamadriz/friendly-snippets'},
-  checkout = 'v1.9.1',
-})
-MiniDeps.add({
-  source = 'VonHeikemen/ts-enable.nvim',
-  checkout = 'v2.x',
+  {
+	  src = 'https://github.com/VonHeikemen/ts-enable.nvim',
+	  version = 'v2.x',
+  },
 })
 
 -- ========================================================================== --
@@ -166,9 +127,9 @@ require('mini.statusline').setup({use_icons = true})
 
 -- See :help MiniNotify.config
 require('mini.notify').setup({
-  lsp_progress = {
-    enable = false,
-  },
+	lsp_progress = {
+		enable = false,
+	},
 })
 
 -- See :help MiniComment.config
@@ -183,53 +144,53 @@ require('mini.git').setup({})
 -- See :help MiniDiff.config
 vim.o.signcolumn = 'yes'
 require('mini.diff').setup({
-  view = {
-    style = 'sign',
-    signs = {
-      add = '▎',
-      change = '▎',
-      delete = '➤',
-    },
-  },
+	view = {
+		style = 'sign',
+		signs = {
+			add = '▎',
+			change = '▎',
+			delete = '➤',
+		},
+	},
 })
 
 -- See :help MiniClue.config
 local mini_clue = require('mini.clue')
 
 mini_clue.setup({
-  window = {
-    delay = 600,
-    config = {
-      width = 50,
-    },
-  },
-  triggers = {
-    {mode = 'n', keys = '['},
-    {mode = 'n', keys = ']'},
-    {mode = 'n', keys = 'g'},
-    {mode = 'x', keys = 'g'},
-    {mode = 'n', keys = 'z'},
-    {mode = 'x', keys = 'z'},
-    {mode = 'n', keys = '<C-w>'},
-    {mode = 'i', keys = '<C-x>'},
-    {mode = 'n', keys = '<leader>'},
-    {mode = 'x', keys = '<leader>'},
-  },
-  clues = {
-    mini_clue.gen_clues.g(),
-    mini_clue.gen_clues.z(),
-    mini_clue.gen_clues.windows(),
-    mini_clue.gen_clues.builtin_completion(),
-    {mode = 'n', keys = '<leader>f', desc = '+Fuzzy finders'},
-    {mode = 'n', keys = '<leader>b', desc = '+Buffer'},
-  }
+	window = {
+		delay = 600,
+		config = {
+			width = 50,
+		},
+	},
+	triggers = {
+		{mode = 'n', keys = '['},
+		{mode = 'n', keys = ']'},
+		{mode = 'n', keys = 'g'},
+		{mode = 'x', keys = 'g'},
+		{mode = 'n', keys = 'z'},
+		{mode = 'x', keys = 'z'},
+		{mode = 'n', keys = '<C-w>'},
+		{mode = 'i', keys = '<C-x>'},
+		{mode = 'n', keys = '<leader>'},
+		{mode = 'x', keys = '<leader>'},
+	},
+	clues = {
+		mini_clue.gen_clues.g(),
+		mini_clue.gen_clues.z(),
+		mini_clue.gen_clues.windows(),
+		mini_clue.gen_clues.builtin_completion(),
+		{mode = 'n', keys = '<leader>f', desc = '+Fuzzy finders'},
+		{mode = 'n', keys = '<leader>b', desc = '+Buffer'},
+	}
 })
 
 -- See :help ts-enable-config
 vim.g.ts_enable = {
-  auto_init = true,
-  auto_install = true,
-  highlights = true,
+	auto_init = true,
+	auto_install = true,
+	highlights = true,
 }
 
 -- docs: https://github.com/folke/snacks.nvim/blob/main/README.md
@@ -237,35 +198,35 @@ local Snacks = require('snacks')
 
 Snacks.setup({
 	git = { enabled = true },
-  lazygit = {
-    enabled = true,
-  },
-  explorer = {
-    enabled = true,
-    replace_netrw = true,
-  },
-  input = {
-    enabled = true,
-    icon = '❯',
-  },
-  picker = {
-    enabled = true,
-    ui_select = true,
-    prompt = '❯ ',
-    formatters = {
-      file = {truncate = 78},
-    },
-  },
+	lazygit = {
+		enabled = true,
+	},
+	explorer = {
+		enabled = true,
+		replace_netrw = true,
+	},
+	input = {
+		enabled = true,
+		icon = '❯',
+	},
+	picker = {
+		enabled = true,
+		ui_select = true,
+		prompt = '❯ ',
+		formatters = {
+			file = {truncate = 78},
+		},
+	},
 })
 
 -- docs: https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
 vim.keymap.set('n', '<leader>e', function()
-  Snacks.explorer()
+	Snacks.explorer()
 end, {desc = 'Toggle file explorer'})
 
 -- docs: https://github.com/folke/snacks.nvim/blob/main/docs/terminal.md
 vim.keymap.set({'n', 't'}, '<C-g>', function()
-  Snacks.terminal.toggle()
+	Snacks.terminal.toggle()
 end, {desc = 'Toggle terminal window'})
 
 -- Fuzzy finders
@@ -285,68 +246,68 @@ vim.keymap.set('n', '<leader>glg', function() Snacks.lazygit() end, {desc = 'Ope
 -- Autocompletion
 -- docs: https://cmp.saghen.dev/configuration/general.html
 require('blink.cmp').setup({
-  fuzzy = {
-    implementation = 'prefer_rust_with_warning',
-  },
-  snippets = {
-    preset = 'mini_snippets',
-  },
-  completion = {
-    documentation = {
-      auto_show = true,
-    },
-    list = {
-      selection = {auto_insert = false},
-    },
-  },
-  signature = {
-    enabled = false,
-  },
-  sources = {
-    default = {'path', 'lsp', 'buffer', 'snippets'},
-    providers = {
-      snippets = {min_keyword_length = 2},
-      buffer = {min_keyword_length = 3},
-      lsp = {fallbacks = {}},
-      path = {fallbacks = {'lsp'}}
-    },
-  },
-  keymap = {
-    preset = 'none',
-    ['<C-e>'] = {'hide', 'fallback'},
-    ['<C-y>'] = {'select_and_accept', 'fallback'},
-    ['<Enter>'] = {'accept', 'fallback'},
+	fuzzy = {
+		implementation = 'prefer_rust_with_warning',
+	},
+	snippets = {
+		preset = 'mini_snippets',
+	},
+	completion = {
+		documentation = {
+			auto_show = true,
+		},
+		list = {
+			selection = {auto_insert = false},
+		},
+	},
+	signature = {
+		enabled = false,
+	},
+	sources = {
+		default = {'path', 'lsp', 'buffer', 'snippets'},
+		providers = {
+			snippets = {min_keyword_length = 2},
+			buffer = {min_keyword_length = 3},
+			lsp = {fallbacks = {}},
+			path = {fallbacks = {'lsp'}}
+		},
+	},
+	keymap = {
+		preset = 'none',
+		['<C-e>'] = {'hide', 'fallback'},
+		['<C-y>'] = {'select_and_accept', 'fallback'},
+		['<Enter>'] = {'accept', 'fallback'},
 
-    ['<C-u>'] = {'scroll_documentation_up', 'fallback'},
-    ['<C-d>'] = {'scroll_documentation_down', 'fallback'},
-    ['<C-Space>'] = {'show_documentation', 'hide_documentation'},
+		['<C-u>'] = {'scroll_documentation_up', 'fallback'},
+		['<C-d>'] = {'scroll_documentation_down', 'fallback'},
+		['<C-Space>'] = {'show_documentation', 'hide_documentation'},
 
-    ['<Up>'] = {'select_prev', 'fallback'},
-    ['<Down>'] = {'select_next', 'fallback'},
-    ['<C-p>'] = {'select_prev', 'fallback_to_mappings'},
-    ['<C-n>'] = {'select_next', 'fallback_to_mappings'},
-    ['<S-Tab>'] = {'select_prev', 'fallback'},
-    ['<Tab>'] = {
-      'select_next',
-      function(cmp)
-        local cursor_pos = vim.api.nvim_win_get_cursor(0)
-        local col = cursor_pos[2]
+		['<Up>'] = {'select_prev', 'fallback'},
+		['<Down>'] = {'select_next', 'fallback'},
+		['<C-p>'] = {'select_prev', 'fallback_to_mappings'},
+		['<C-n>'] = {'select_next', 'fallback_to_mappings'},
+		['<S-Tab>'] = {'select_prev', 'fallback'},
+		['<Tab>'] = {
+			'select_next',
+			function(cmp)
+				local cursor_pos = vim.api.nvim_win_get_cursor(0)
+				local col = cursor_pos[2]
 
-        if col == 0 then
-          return
-        end
+				if col == 0 then
+					return
+				end
 
-        local line = cursor_pos[1] - 1
-        local ch = vim.api.nvim_buf_get_text(0, line, col - 1, line, col, {})[1] or ''
-        if ch == '' or ch:match('%s') then
-          return
-        end
+				local line = cursor_pos[1] - 1
+				local ch = vim.api.nvim_buf_get_text(0, line, col - 1, line, col, {})[1] or ''
+				if ch == '' or ch:match('%s') then
+					return
+				end
 
-        return cmp.show()
-      end,
-      'fallback'
-    },
-  },
+				return cmp.show()
+			end,
+			'fallback'
+		},
+},
 })
 
 -- LSP setup

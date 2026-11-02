@@ -2,7 +2,16 @@
   "plugins": {
     "blink.cmp": {
       "rev": "2ef3db111181c5eef22a462aa0122349a6027f28",
-      "src": "https://github.com/saghen/blink.cmp"
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "'v1.9.1'"
+    },
+    "dark2026.nvim": {
+      "rev": "3fc6ca199a3537b46e49dbe5eed669fe9ff0d63e",
+      "src": "https://github.com/D0nw0r/dark2026.nvim"
+    },
+    "friendly-snippets": {
+      "rev": "b2ea5c41a150ba72fb656eedb4ed0a86d138d945",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "github-nvim-theme": {
       "rev": "c106c9472154d6b2c74b74565616b877ae8ed31d",
@@ -38,8 +47,7 @@
     },
     "mini.nvim": {
       "rev": "af5f75c9ce572a4d1f0c77d6fb4ea764d16c1b3c",
-      "src": "https://github.com/nvim-mini/mini.nvim",
-      "version": "'main'"
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "modus-themes.nvim": {
       "rev": "17a64464c27c1be605adca13dbe48f2f402fe107",
@@ -59,8 +67,7 @@
     },
     "nvim-treesitter": {
       "rev": "7caec274fd19c12b55902a5b795100d21531391f",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
-      "version": "'main'"
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-web-devicons": {
       "rev": "2795c26c916bb3c57dde308b82be51971fa92747",
@@ -92,11 +99,16 @@
     },
     "ts-enable.nvim": {
       "rev": "b6cbde53a490075c59f9b78c54530abf034a47d4",
-      "src": "https://github.com/VonHeikemen/ts-enable.nvim"
+      "src": "https://github.com/VonHeikemen/ts-enable.nvim",
+      "version": "'v2.x'"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
       "src": "https://github.com/folke/which-key.nvim"
+    },
+    "zig.vim": {
+      "rev": "4842ab8cb1b000a9acb0a06170d404d12a154918",
+      "src": "https://codeberg.org/ziglang/zig.vim"
     }
   }
 }
