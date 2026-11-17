@@ -132,6 +132,8 @@ require('mini.notify').setup({
 	},
 })
 
+require('mini.pairs').setup({})
+
 -- See :help MiniComment.config
 require('mini.comment').setup({})
 
